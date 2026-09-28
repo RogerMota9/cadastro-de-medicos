@@ -1,0 +1,132 @@
+
+O sistema permite cadastrar, editar, listar e excluir médicos, além de registrar as alterações realizadas através de uma tela de auditoria.
+
+## Tecnologias utilizadas
+
+- PHP 5.6
+- CodeIgniter 3
+- PostgreSQL
+- HTML
+- CSS
+- JavaScript
+
+
+### Cadastro de médicos
+
+É possível cadastrar médicos informando:
+
+- Nome
+- CRM
+- Especialidade
+- Telefone
+- E-mail
+
+A Situação por padrão fica ativa, então não coloquei a opção de cadastrar ela, mas pode inativar editando o médico.
+
+O nome, CRM e especialidade são campos obrigatórios.
+O CRM deve ser único e possuir exatamente 6 dígitos (eu pesquisei a quantidade de números que possui um crm médico)
+O telefone deve possuir exatamente 11 dígitos.
+O e-mail, quando preenchido, tem um formato válido.
+
+### Listagem
+
+A tela principal apresenta todos os médicos cadastrados em uma tabela.
+
+Também possui opções para:
+
+- Cadastrar novo médico
+- Editar médico
+- Excluir médico
+- Acessar a auditoria
+
+### Edição
+
+É possível editar os dados de um médico através de uma tela separada.
+Os campos obrigatórios são validados antes da alteração ser realizada.
+
+### Exclusão
+
+A exclusão é feita através da tela de listagem.
+Antes da exclusão, o sistema apresenta uma confirmação em JavaScript para evitar exclusões acidentais.
+Foi escolhida a exclusão física, ou seja, o registro é removido da tabela 'medicos'. Eu escolhi essa forma porque não existe algo no sistema que dependa de ter ou não de ter esse médico cadastrado. Pra não ficar muita informação "desnecessária" na tabela, optei por simplesmente apagar o médico do banco nesse projeto.   
+
+Os dados anteriores do médico são armazenados na tabela de auditoria antes da exclusão.
+
+### Auditoria
+
+O sistema possui uma tela de auditoria que registra:
+
+- Ação realizada
+- ID da auditoria
+- ID do médico
+- Data e hora da ação
+- Dados anteriores
+- Dados posteriores
+
+São registradas as ações de:
+
+- CREATE
+- UPDATE
+- DELETE
+
+Os dados anteriores e posteriores são armazenados em formato JSON.
+
+## Estrutura
+
+O projeto utiliza o padrão MVC do CodeIgniter:
+
+- 'controllers' — recebe as requisições e controla o fluxo da aplicação.
+- 'models' — realiza as operações relacionadas ao banco de dados.
+- 'views' — contém as páginas HTML apresentadas ao usuário.
+
+## Banco de dados
+
+Foram utilizadas duas tabelas principais:
+
+### medicos
+
+Armazena os dados dos médicos cadastrados.
+
+### auditoria
+
+Armazena o histórico das ações realizadas nos médicos, incluindo os dados antes e depois das alterações.
+
+## Decisões do projeto
+
+A auditoria foi criada para preservar o histórico das alterações mesmo quando um médico é excluído da tabela 'medicos'.
+
+Também foi utilizada validação no servidor através da biblioteca de validação de formulários do CodeIgniter.
+
+## O que foi concluído
+
+- Configuração do CodeIgniter 3
+- Conexão com PostgreSQL
+- Criação da tabela 'medicos'
+- Criação da tabela 'auditoria'
+- Listagem de médicos
+- Cadastro de médicos
+- Edição de médicos
+- Exclusão de médicos
+- Confirmação antes da exclusão
+- Validação dos campos
+- Validação de CRM
+- Validação de telefone
+- Validação de e-mail
+- Auditoria de cadastro
+- Auditoria de edição
+- Auditoria de exclusão
+- Tela de auditoria
+- CSS das telas
+- Navegação entre as telas e redirecionamento após envio dos formulários
+
+## Conexão com o banco de dados
+
+Foi incluído o arquivo 'cadastro_de_medicos.sql' junto ao projeto para permitir a criação e restauração do banco de dados utilizado pela aplicação.
+O arquivo contém a estrutura das tabelas e os dados utilizados durante os testes do projeto.
+
+## Observações
+
+Na parte da auditoria de registrar quem fez a alteração, eu não entendi bem como eu poderia aplicar isso.
+Pra mim, faria sentido ter isso caso tivessem usuários no sistema, mas o usuário principal (eu) tenho total poder no sistema,
+faria sentido ter uma tela de login pra registrar os usuários, mas como não pedia isso no sistema eu optei por simplesmente só explicar aqui meu ponto em relação a isso.
+
