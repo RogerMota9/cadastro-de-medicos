@@ -1,163 +1,183 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Editar médico</title>
 
-    <style>
-    body {
-    background-color: #E8ECEB;
-    margin: 0;
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
-    color: #222;
-}
+    <title>Editar Médico</title>
 
-    .formulario-container {
-        width: 90%;
-        margin: 35px auto;
-        background-color: #FFFFFF;
-        padding: 30px;
-        box-sizing: border-box;
-        border-radius: 8px;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-    }
-
-    .titulo {
-        font-size: 30px;
-        margin: 0 0 25px;
-    }
-
-    .formulario {
-        display: flex;
-        flex-direction: column;
-        gap: 15px;
-    }
-
-    .formulario label {
-        font-size: 14px;
-    }
-
-    .formulario input,
-    .formulario select {
-        display: block;
-        width: 100%;
-        padding: 10px;
-        margin-top: 6px;
-        box-sizing: border-box;
-        border: 1px solid #C8CECC;
-        border-radius: 6px;
-        background-color: #F4F6F5;
-        font-family: Verdana, Geneva, Tahoma, sans-serif;
-        font-size: 14px;
-        outline: none;
-    }
-
-    .formulario input:focus,
-    .formulario select:focus {
-        background-color: #FFFFFF;
-        border-color: #8A9692;
-    }
-
-    .botao {
-        width: 180px;
-        padding: 10px;
-        margin-top: 5px;
-        background-color: #E8ECEB;
-        border: 1px solid #C8CECC;
-        border-radius: 6px;
-        font-family: Verdana, Geneva, Tahoma, sans-serif;
-        font-size: 14px;
-        cursor: pointer;
-        transition: 0.2s;
-    }
-
-    .botao:hover {
-        background-color: #D9DEDC;
-    }
-
-    .voltar-lista {
-        display: block;
-        width: 190px;
-        padding: 10px;
-        margin-bottom: 25px;
-        background-color: #E8ECEB;
-        border: 1px solid #C8CECC;
-        border-radius: 7px;
-        box-sizing: border-box;
-        font-family: Verdana, Geneva, Tahoma, sans-serif;
-        font-size: 14px;
-        color: #222;
-        text-align: center;
-        text-decoration: none;
-        color: #222;
-        cursor: pointer;
-        transition: 0.2s;
-    }
-
-    .voltar-lista:hover {
-        background-color: #D9DEDC;
-    }
-
-    .erro {
-        color: #A00000;
-        margin-bottom: 15px;
-        font-size: 14px;
-    }
-
-    .alertQuant {
-        color: #A00000;
-        margin-bottom: 15px;
-        font-size: 14px;
-    }
-    </style>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
+
 <body>
-    <div class="formulario-container">
-    
-    <a href="http://localhost/cadastro_de_medico/index.php/medicos">
-        <button class="voltar-lista" type="button">Voltar para lista</button>
-    </a>
 
-    <h1 class="titulo">EDITAR MÉDICO</h1>
+<div class="container mt-5">
 
-    <?php if (validation_errors()): ?>
-        <div class="erro">
-            <?= validation_errors(); ?>
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1>Editar Médico</h1>
+
+        <a href="<?= site_url('medicos'); ?>" class="btn btn-secondary">
+            Voltar
+        </a>
+    </div>
+
+    <?php if (isset($erro)): ?>
+        <div class="alert alert-danger">
+            <?= htmlspecialchars($erro); ?>
         </div>
     <?php endif; ?>
 
-    <?php if (!empty($erros)): ?>
-        <div class="alertQuant">
-            <?php foreach ($erros as $erro): ?>
-                <p><?= htmlspecialchars($erro) ?></p>
-            <?php endforeach; ?>
+    <form action="<?= site_url('medicos/atualizar/' . $medico->id); ?>" method="post">
+
+  
+        <div class="mb-3">
+
+            <label for="nome" class="form-label">
+                Nome
+            </label>
+
+            <input
+                type="text"
+                class="form-control <?= form_error('nome') ? 'is-invalid' : ''; ?>"
+                id="nome"
+                name="nome"
+                value="<?= set_value('nome', $medico->nome); ?>"
+            >
+
+            <?php if (form_error('nome')): ?>
+                <div class="invalid-feedback">
+                    <?= form_error('nome'); ?>
+                </div>
+            <?php endif; ?>
+
         </div>
-<?php endif; ?>
 
-    <form class="formulario" action="http://localhost/cadastro_de_medico/index.php/medicos/atualizar" method="POST">
 
-        <input type="hidden" name="id" value="<?= $medicos->id ?>">
-        <label>Nome:<input type="text" name="nome" value="<?= $medicos->nome ?>"></label>
-        <label>Crm:<input type="text" name="crm" value="<?= $medicos->crm ?>"></label>
+        <div class="mb-3">
 
-        <label>Especialidade:<input type="text" name="especialidade" value="<?= $medicos->especialidade ?>"></label>
+            <label for="crm" class="form-label">
+                CRM
+            </label>
 
-        <label>Telefone:<input type="text" name="telefone" value="<?= $medicos->telefone ?>"></label>
+            <input
+                type="text"
+                class="form-control <?= form_error('crm') ? 'is-invalid' : ''; ?>"
+                id="crm"
+                name="crm"
+                maxlength="6"
+                value="<?= set_value('crm', $medico->crm); ?>"
+            >
 
-        <label>Email:<input type="email" name="email" value="<?= $medicos->email ?>"></label>
+            <?php if (form_error('crm')): ?>
+                <div class="invalid-feedback">
+                    <?= form_error('crm'); ?>
+                </div>
+            <?php endif; ?>
 
-        <label>Situação:
-            <select name="situacao">
-                <option value="true">Ativo</option>
-                <option value="false">Inativo</option>
-            </select>
-        </label>
+        </div>
 
-        <button class="botao" type="submit">Salvar alterações</button>
+
+        <div class="mb-3">
+
+            <label for="especialidade" class="form-label">
+                Especialidade
+            </label>
+
+            <input
+                type="text"
+                class="form-control <?= form_error('especialidade') ? 'is-invalid' : ''; ?>"
+                id="especialidade"
+                name="especialidade"
+                value="<?= set_value('especialidade', $medico->especialidade); ?>"
+            >
+
+            <?php if (form_error('especialidade')): ?>
+                <div class="invalid-feedback">
+                    <?= form_error('especialidade'); ?>
+                </div>
+            <?php endif; ?>
+
+        </div>
+
+
+        <div class="mb-3">
+
+            <label for="telefone" class="form-label">
+                Telefone
+            </label>
+
+            <input
+                type="text"
+                class="form-control <?= form_error('telefone') ? 'is-invalid' : ''; ?>"
+                id="telefone"
+                name="telefone"
+                maxlength="11"
+                value="<?= set_value('telefone', $medico->telefone); ?>"
+            >
+
+            <?php if (form_error('telefone')): ?>
+                <div class="invalid-feedback">
+                    <?= form_error('telefone'); ?>
+                </div>
+            <?php endif; ?>
+
+        </div>
+
+        <div class="mb-3">
+
+            <label for="email" class="form-label">
+                E-mail
+            </label>
+
+            <input
+                type="text"
+                class="form-control <?= form_error('email') ? 'is-invalid' : ''; ?>"
+                id="email"
+                name="email"
+                value="<?= set_value('email', $medico->email); ?>"
+            >
+
+            <?php if (form_error('email')): ?>
+                <div class="invalid-feedback">
+                    <?= form_error('email'); ?>
+                </div>
+            <?php endif; ?>
+
+        </div>
+
+
+        <div class="mb-3">
+
+            <label class="form-label">
+                Situação
+            </label>
+
+            <div>
+                <?php if ($medico->situacao): ?>
+
+                    <span class="badge bg-success">
+                        Ativo
+                    </span>
+
+                <?php else: ?>
+
+                    <span class="badge bg-danger">
+                        Inativo
+                    </span>
+
+                <?php endif; ?>
+            </div>
+
+        </div>
+
+
+        <button type="submit" class="btn btn-primary">
+            Salvar alterações
+        </button>
 
     </form>
 
 </div>
+
 </body>
 </html>

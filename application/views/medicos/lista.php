@@ -1,202 +1,254 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
+
 <head>
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lista de medicos</title>
-    <style>
-        body {
-    background-color: #F2F4F3;
-    margin: 0;
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
-    color: #222;
-}
 
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
-.titulo {
-    font-size: 30px;
-    margin: 35px 5% 20px;
-}
+    <title>Cadastro de Médicos</title>
 
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+    >
 
-
-.novo-medico {
-    display: inline-block;
-    width: 190px;
-    padding: 11px;
-    margin-left: 5%;
-    margin-bottom: 25px;
-
-    background-color: #ffffff;
-    border: 1px solid #d5d5d5;
-    border-radius: 7px;
-
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
-    font-size: 14px;
-    text-align: center;
-    text-decoration: none;
-    color: #222;
-
-    box-sizing: border-box;
-    cursor: pointer;
-    transition: 0.2s;
-}
-
-.novo-medico:hover {
-    background-color: #eeeeee;
-}
-
-
-
-.lista_tabela {
-    width: 90%;
-    margin: 0 auto 40px;
-
-    background-color: #ffffff;
-
-    border-radius: 8px;
-    overflow: hidden;
-}
-
-
-
-.tabela {
-    width: 100%;
-
-    border-collapse: collapse;
-    table-layout: fixed;
-
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
-    font-size: 14px;
-
-    background-color: #ffffff;
-}
-
-
-
-th {
-    height: 50px;
-    padding: 10px;
-
-    background-color: #f5f5f5;
-
-    font-size: 14px;
-    text-align: center;
-
-    border-bottom: 1px solid #dddddd;
-}
-
-
-
-td {
-    padding: 12px 10px;
-
-    text-align: center;
-    vertical-align: middle;
-
-    border-bottom: 1px solid #eeeeee;
-
-    word-wrap: break-word;
-}
-
-
-tr {
-    background-color: #ffffff;
-}
-
-
-
-.editar,
-.excluir {
-    width: 80px;
-    padding: 8px;
-
-    border: 1px solid #d5d5d5;
-    border-radius: 5px;
-
-    background-color: #ffffff;
-
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
-    font-size: 13px;
-
-    cursor: pointer;
-    transition: 0.2s;
-}
-
-.editar:hover,
-.excluir:hover {
-    background-color: #eeeeee;
-}
-
-       
-
-    </style>
 </head>
+
+
 <body>
 
-    <h1 class="titulo">LISTA DE MÉDICOS</h1>
-
-    <a href="http://localhost/cadastro_de_medico/index.php/medicos/auditoria">
-    <a class="novo-medico" href="http://localhost/cadastro_de_medico/index.php/medicos/auditoria">
-    Auditoria
-    </a>
-
-    <a class="novo-medico" href="http://localhost/cadastro_de_medico/index.php/medicos/novo_medico">
-    Novo médico
-    </a>
+<div class="container mt-5">
 
 
-    
-    <div class="lista_tabela">
 
-        <table class="tabela">
-            <tr>
-                <th>ID</th>
-                <th>NOME</th>
-                <th>CRM</th>
-                <th>ESPECIALIDADE</th>
-                <th>TELEFONE</th>
-                <th>EMAIL</th>
-                <th>SITUAÇÃO</th>
-                <th>DATA DE CADASTRO</th>
-                <th>EDITAR</th>
-                <th>EXCLUIR</th>
-                
-            </tr>
+    <div class="d-flex justify-content-between align-items-center mb-4">
 
-            <?php foreach ($medicos as $medico): ?>
+        <h1>Cadastro de Médicos</h1>
+
+
+        <div>
+
+            <a
+                href="<?= site_url('medicos/novo_medico'); ?>"
+                class="btn btn-primary"
+            >
+                Cadastrar
+            </a>
+
+
+            <a
+                href="<?= site_url('medicos/auditoria'); ?>"
+                class="btn btn-secondary"
+            >
+                Auditoria
+            </a>
+
+
+            <a
+                href="<?= site_url('login/sair'); ?>"
+                class="btn btn-danger"
+            >
+                Sair
+            </a>
+
+        </div>
+
+    </div>
+
+
+
+    <form
+        method="get"
+        action="<?= site_url('medicos'); ?>"
+        class="row mb-4"
+    >
+
+        <div class="col-md-10">
+
+            <input
+                type="text"
+                name="busca"
+                class="form-control"
+                placeholder="Buscar por nome ou CRM"
+                value="<?= isset($busca) ? htmlspecialchars($busca) : ''; ?>"
+            >
+
+        </div>
+
+
+        <div class="col-md-2">
+
+            <button
+                type="submit"
+                class="btn btn-primary w-100"
+            >
+                Buscar
+            </button>
+
+        </div>
+
+    </form>
+
+
+
+    <div class="table-responsive">
+
+        <table class="table table-bordered table-striped align-middle">
+
+            <thead>
 
                 <tr>
-                    <td><?= $medico->id ?></td>
-                    <td><?= $medico->nome ?></td>
-                    <td><?= $medico->crm ?></td>
-                    <td><?= $medico->especialidade ?></td>
-                    <td><?= $medico->telefone ?></td>
-                    <td><?= $medico->email ?></td>
-                    <td>
-                        <?= $medico->situacao === 't' ? 'Ativo' : 'Inativo' ?>
-                    </td>
-                    <td><?= $medico->data_cadastro ?></td>
-                    <td>
-                        <a href="http://localhost/cadastro_de_medico/index.php/medicos/editar/<?= $medico->id ?>">
-                            <button class="editar">Editar</button>
-                        </a>
-                    </td>
 
-                    <td>
-                        <a href="http://localhost/cadastro_de_medico/index.php/medicos/excluir/<?= $medico->id ?>"
-                        onclick="return confirm('tem certeza que deseja excluir esse campo?')" >
-                            <button class="excluir">Excluir</button>
-                        </a>
-                    </td>
+                    <th>Nome</th>
+
+                    <th>CRM</th>
+
+                    <th>Especialidade</th>
+
+                    <th>Telefone</th>
+
+                    <th>E-mail</th>
+
+                    <th>Situação</th>
+
+                    <th>Data de cadastro</th>
+
+                    <th>Ações</th>
 
                 </tr>
 
-            <?php endforeach; ?>
+            </thead>
+
+
+            <tbody>
+
+                <?php foreach ($medicos as $medico): ?>
+
+                    <tr>
+
+
+
+                        <td>
+                            <?= htmlspecialchars($medico->nome); ?>
+                        </td>
+
+
+
+                        <td>
+                            <?= htmlspecialchars($medico->crm); ?>
+                        </td>
+
+
+
+                        <td>
+                            <?= htmlspecialchars($medico->especialidade); ?>
+                        </td>
+
+
+
+                        <td>
+                            <?= htmlspecialchars($medico->telefone); ?>
+                        </td>
+
+
+
+                        <td>
+                            <?= htmlspecialchars($medico->email); ?>
+                        </td>
+
+
+
+                        <td>
+
+                            <?php if (
+                                $medico->situacao === true ||
+                                $medico->situacao === 't' ||
+                                $medico->situacao === '1'
+                            ): ?>
+
+                                <span class="badge bg-success">
+                                    Ativo
+                                </span>
+
+                            <?php else: ?>
+
+                                <span class="badge bg-danger">
+                                    Inativo
+                                </span>
+
+                            <?php endif; ?>
+
+                        </td>
+
+
+
+                        <td>
+                            <?= htmlspecialchars($medico->data_cadastro); ?>
+                        </td>
+
+
+
+                        <td>
+
+                            <a
+                                href="<?= site_url('medicos/editar/' . $medico->id); ?>"
+                                class="btn btn-warning btn-sm"
+                            >
+                                Editar
+                            </a>
+
+
+                            <?php if (
+                                $medico->situacao === true ||
+                                $medico->situacao === 't' ||
+                                $medico->situacao === '1'
+                            ): ?>
+
+
+
+                                <a
+                                    href="<?= site_url('medicos/excluir/' . $medico->id); ?>"
+                                    class="btn btn-danger btn-sm"
+                                    onclick="return confirm('Deseja realmente inativar este médico?');"
+                                >
+                                    Inativar
+                                </a>
+
+
+                            <?php else: ?>
+
+
+
+                                <a
+                                    href="<?= site_url('medicos/ativar/' . $medico->id); ?>"
+                                    class="btn btn-success btn-sm"
+                                    onclick="return confirm('Deseja realmente ativar este médico?');"
+                                >
+                                    
+                                </a>
+
+
+                            <?php endif; ?>
+
+                        </td>
+
+                    </tr>
+
+                <?php endforeach; ?>
+
+            </tbody>
+
         </table>
 
-                
     </div>
-    
+
+</div>
+
 </body>
+
 </html>
