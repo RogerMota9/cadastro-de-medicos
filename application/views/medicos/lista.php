@@ -19,17 +19,13 @@
 
 </head>
 
-
 <body>
 
 <div class="container mt-5">
 
-
-
     <div class="d-flex justify-content-between align-items-center mb-4">
 
         <h1>Cadastro de Médicos</h1>
-
 
         <div>
 
@@ -40,14 +36,12 @@
                 Cadastrar
             </a>
 
-
             <a
                 href="<?= site_url('medicos/auditoria'); ?>"
                 class="btn btn-secondary"
             >
                 Auditoria
             </a>
-
 
             <a
                 href="<?= site_url('login/sair'); ?>"
@@ -59,8 +53,6 @@
         </div>
 
     </div>
-
-
 
     <form
         method="get"
@@ -80,7 +72,6 @@
 
         </div>
 
-
         <div class="col-md-2">
 
             <button
@@ -94,8 +85,6 @@
 
     </form>
 
-
-
     <div class="table-responsive">
 
         <table class="table table-bordered table-striped align-middle">
@@ -105,25 +94,17 @@
                 <tr>
 
                     <th>Nome</th>
-
                     <th>CRM</th>
-
                     <th>Especialidade</th>
-
                     <th>Telefone</th>
-
                     <th>E-mail</th>
-
                     <th>Situação</th>
-
                     <th>Data de cadastro</th>
-
                     <th>Ações</th>
 
                 </tr>
 
             </thead>
-
 
             <tbody>
 
@@ -131,37 +112,25 @@
 
                     <tr>
 
-
-
                         <td>
                             <?= htmlspecialchars($medico->nome); ?>
                         </td>
-
-
 
                         <td>
                             <?= htmlspecialchars($medico->crm); ?>
                         </td>
 
-
-
                         <td>
                             <?= htmlspecialchars($medico->especialidade); ?>
                         </td>
-
-
 
                         <td>
                             <?= htmlspecialchars($medico->telefone); ?>
                         </td>
 
-
-
                         <td>
                             <?= htmlspecialchars($medico->email); ?>
                         </td>
-
-
 
                         <td>
 
@@ -185,13 +154,9 @@
 
                         </td>
 
-
-
                         <td>
                             <?= htmlspecialchars($medico->data_cadastro); ?>
                         </td>
-
-
 
                         <td>
 
@@ -202,14 +167,11 @@
                                 Editar
                             </a>
 
-
                             <?php if (
                                 $medico->situacao === true ||
                                 $medico->situacao === 't' ||
                                 $medico->situacao === '1'
                             ): ?>
-
-
 
                                 <a
                                     href="<?= site_url('medicos/excluir/' . $medico->id); ?>"
@@ -219,19 +181,15 @@
                                     Inativar
                                 </a>
 
-
                             <?php else: ?>
-
-
 
                                 <a
                                     href="<?= site_url('medicos/ativar/' . $medico->id); ?>"
                                     class="btn btn-success btn-sm"
                                     onclick="return confirm('Deseja realmente ativar este médico?');"
                                 >
-                                    
+                                    Ativar
                                 </a>
-
 
                             <?php endif; ?>
 
